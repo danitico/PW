@@ -13,7 +13,7 @@
     <?php
         /*require '.env.php';*/
 
-        $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
+        $db = new mysqli(getenv('SERVERNAME'), getenv('USERNAME'), getenv('PASSWORD'), getenv('DATABASE'));
 
         if($db->connect_error){
             die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
