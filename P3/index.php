@@ -14,11 +14,7 @@
             </tr>
 
             <?php
-                $SERVERNAME="oraclepr.uco.es";
-                $USERNAME="***";
-                $PASSWORD="***";
-                $DATABASE="***";
-
+                require '.env.php';
                 $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
 
                 if($db->connect_error){

@@ -8,29 +8,27 @@
         <div align="center">
             <form method="post" action="">
                 <label for="nombre">Nombre</label><br>
-                <input type="text" name="nombre"><br>
+                <input type="text" name="nombre" required><br>
 
                 <label for="dni">DNI</label><br>
-                <input type="text" name="dni"><br>
+                <input type="text" name="dni" required><br>
 
                 <label for="edad">Edad</label><br>
-                <input type="text" name="edad"><br>
+                <input type="text" name="edad" required><br>
 
                 <label for="departamento">Departamento</label><br>
-                <input type="text" name="departamento"><br><br>
+                <input type="text" name="departamento" required><br><br>
 
                 <input name="submit" type="submit" value="Añadir">
             </form>
         </div>
         <?php
             require 'Trabajador.php';
-            $SERVERNAME="oraclepr.uco.es";
-            $USERNAME="***";
-            $PASSWORD="***";
-            $DATABASE="***";
+            require '.env.php';
 
             if(isset($_POST['submit'])) {
                 $empleado = new Trabajador($_POST['nombre'], $_POST['dni'], $_POST['edad'], $_POST['departamento']);
+
 
                 $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
 

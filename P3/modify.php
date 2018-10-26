@@ -7,10 +7,7 @@
     <body>
         <?php
             require 'Trabajador.php';
-            $SERVERNAME="oraclepr.uco.es";
-            $USERNAME="***";
-            $PASSWORD="***";
-            $DATABASE="***";
+            require '.env.php';
 
             $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
 
@@ -26,18 +23,19 @@
             echo '<div align="center">';
             echo '<form method="post" action="">';
             echo '<label for="nombre">Nombre</label><br>';
-            echo '<input type="text" name="nombre" value="' . $_GET['NOMBRE'] . '"><br>';
+            echo '<input type="text" name="nombre" value="' . $_GET['NOMBRE'] . '" required><br>';
 
             echo '<label for="dni">DNI</label><br>';
-            echo '<input type="text" name="dni" value="' . $results[0][0] . '"><br>';
+            echo '<input type="text" name="dni" value="' . $results[0][0] . '" required><br>';
 
             echo '<label for="edad">Edad</label><br>';
-            echo '<input type="text" name="edad" value="' . $results[0][1] . '"><br>';
+            echo '<input type="text" name="edad" value="' . $results[0][1] . '" required><br>';
 
             echo '<label for="departamento">Departamento</label><br>';
-            echo '<input type="text" name="departamento" value="' . utf8_encode($results[0][2]) . '"><br><br>';
+            echo '<input type="text" name="departamento" value="' . utf8_encode($results[0][2]) . '" required><br><br>';
 
             echo '<input name="submit" type="submit" value="Modificar Empleado">';
+            echo '<input type="reset" value="Recuperar valores originales" />';
             echo '</form></div>';
 
             if(isset($_POST['submit'])) {
@@ -56,5 +54,3 @@
         ?>
     </body>
 </html>
-
-
