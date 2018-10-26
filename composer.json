@@ -1,0 +1,10 @@
+{
+    "name": "daniel/pw",
+    "authors": [
+        {
+            "name": "Daniel Ranchal",
+            "email": "danitico98@gmail.com"
+        }
+    ],
+    "require": {}
+}
