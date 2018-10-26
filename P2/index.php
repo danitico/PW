@@ -12,9 +12,10 @@
             </tr>
 
             <?php
-                /*require '.env.php';*/
+                require '.env.php';
 
-                $db = new mysqli(getenv('SERVERNAME'), getenv('USERNAME'), getenv('PASSWORD'), getenv('DATABASE'));
+                $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
+
 
                 if($db->connect_error){
                     die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
