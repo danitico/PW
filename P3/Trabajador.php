@@ -20,7 +20,7 @@ class Trabajador
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getNombre()
     {
@@ -28,7 +28,8 @@ class Trabajador
     }
 
     /**
-     * @param mixed $Nombre
+     * @param string $Nombre
+     * @return Trabajador
      */
     public function setNombre($Nombre)
     {
@@ -37,7 +38,7 @@ class Trabajador
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDNI()
     {
@@ -45,16 +46,17 @@ class Trabajador
     }
 
     /**
-     * @param mixed $DNI
+     * @param string $DNI
+     * @return Trabajador
      */
-    public function setDNI($DNI)
+    public function setDNI(string $DNI)
     {
         $this->DNI = $DNI;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getEdad()
     {
@@ -62,16 +64,17 @@ class Trabajador
     }
 
     /**
-     * @param mixed $Edad
+     * @param int $Edad
+     * @return Trabajador
      */
-    public function setEdad($Edad)
+    public function setEdad(int $Edad)
     {
         $this->Edad = $Edad;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDepartamento()
     {
@@ -79,14 +82,12 @@ class Trabajador
     }
 
     /**
-     * @param mixed $Departamento
+     * @param string $Departamento
+     * @return Trabajador
      */
-    public function setDepartamento($Departamento)
+    public function setDepartamento(string $Departamento)
     {
         $this->Departamento = $Departamento;
         return $this;
     }
-
-
 }
-

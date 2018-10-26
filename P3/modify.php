@@ -29,7 +29,7 @@
             echo '<input type="text" name="dni" value="' . $results[0][0] . '" required><br>';
 
             echo '<label for="edad">Edad</label><br>';
-            echo '<input type="text" name="edad" value="' . $results[0][1] . '" required><br>';
+            echo '<input type="number" name="edad" value="' . $results[0][1] . '" required><br>';
 
             echo '<label for="departamento">Departamento</label><br>';
             echo '<input type="text" name="departamento" value="' . utf8_encode($results[0][2]) . '" required><br><br>';

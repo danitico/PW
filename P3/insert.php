@@ -14,7 +14,7 @@
                 <input type="text" name="dni" required><br>
 
                 <label for="edad">Edad</label><br>
-                <input type="text" name="edad" required><br>
+                <input type="number" name="edad" required><br>
 
                 <label for="departamento">Departamento</label><br>
                 <input type="text" name="departamento" required><br><br>
