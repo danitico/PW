@@ -12,10 +12,7 @@
             </tr>
 
             <?php
-                $SERVERNAME="oraclepr.uco.es";
-                $USERNAME="i62rapad";
-                $PASSWORD="InGeNiErO1";
-                $DATABASE="i62rapad";
+                /*require '.env.php';*/
 
                 $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
 

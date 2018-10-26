@@ -11,10 +11,7 @@
 <body>
     <ul>
     <?php
-        $SERVERNAME="oraclepr.uco.es";
-        $USERNAME="i62rapad";
-        $PASSWORD="InGeNiErO1";
-        $DATABASE="i62rapad";
+        /*require '.env.php';*/
 
         $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
 
@@ -23,6 +20,7 @@
         }
 
         $query = "SELECT DNI,EDAD,DEPARTAMENTO FROM EMPLEADOS WHERE NOMBRE LIKE " . "'" . $_GET['NOMBRE'] . "'" . ";";
+
         $results = $db->query($query);
         $results = $results->fetch_all(MYSQLI_NUM);
 
@@ -34,7 +32,7 @@
         $db->close();
     ?>
     </ul>
-<br><br>
-<a href="index.php">Volver al listado</a>
+    <br><br>
+    <a href="index.php">Volver al listado</a>
 </body>
 </html>
