@@ -6,6 +6,36 @@
     </head>
     <body>
     <br>
+    <?php
+    require '.env.php';
+
+    if(isset($_POST['submit'])) {
+        $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
+
+        if ($db->connect_error) {
+            die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
+        }
+
+        $query = "SELECT PASSWORD FROM USUARIOS WHERE USERNAME LIKE " . "'" . $_POST['username'] . "';";
+        if (!$db->query($query)) {
+            die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
+        }
+        else{
+            if ($db->affected_rows === 0){
+                echo "<div align='center'><p><font color=red>El usuario " . $_POST['username'] . " no existe</font></p></div>";
+
+                $db->close();
+                /*header("location: index.php");*/
+            }
+            else{
+                echo "hola";
+            }
+            /*header("Location: uco.es");*/
+            /*exit;*/
+        }
+    }
+
+    ?>
     <div align="center">
         <form method="post" action="">
             <label for="username">Username</label><br>
@@ -18,10 +48,9 @@
         </form>
     </div>
     <div align="center">
-        <form style="display: inline"  action="register.php" method="get">
+        <form style="display: inline"  action="register.php" method="post">
             <button>Crear una cuenta</button>
         </form>
     </div>
-
     </body>
 </html>
