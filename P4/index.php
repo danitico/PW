@@ -17,7 +17,8 @@
         }
 
         $query = "SELECT PASSWORD FROM USUARIOS WHERE USERNAME LIKE " . "'" . $_POST['username'] . "';";
-        if (!$db->query($query)) {
+        $result = $db->query($query);
+        if (!$result) {
             die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
         }
         else{
@@ -28,7 +29,15 @@
                 /*header("location: index.php");*/
             }
             else{
-                echo "hola";
+                $result = $result->fetch_all(MYSQLI_NUM);
+
+                if($_POST['passwd'] === $result[0][0]){
+                    $secret_word = "I am a computer scientist";
+                    setcookie('login',$_POST['username'].','.md5($_POST['username'].$secret_word), 0);
+                }
+                else{
+                    echo "<div align='center'><p><font color=red>Contraseña equivocada</font></p></div>";
+                }
             }
             /*header("Location: uco.es");*/
             /*exit;*/
