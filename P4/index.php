@@ -2,12 +2,15 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Página Principal</title>
+        <title>Authentication</title>
     </head>
     <body>
     <br>
     <?php
     require '.env.php';
+    if(isset($_GET['conf'])){
+        echo "<div align='center'><p><font color=green>" . $_GET['conf'] . "</font></p></div>";
+    }
 
     if(isset($_POST['submit'])) {
         $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
@@ -24,23 +27,20 @@
         else{
             if ($db->affected_rows === 0){
                 echo "<div align='center'><p><font color=red>El usuario " . $_POST['username'] . " no existe</font></p></div>";
-
                 $db->close();
-                /*header("location: index.php");*/
             }
             else{
                 $result = $result->fetch_all(MYSQLI_NUM);
 
-                if($_POST['passwd'] === $result[0][0]){
+                if(password_verify($_POST['passwd'], $result[0][0])){
                     $secret_word = "I am a computer scientist";
                     setcookie('login',$_POST['username'].','.md5($_POST['username'].$secret_word), 0);
+                    header("Location: prueba.php");
                 }
                 else{
                     echo "<div align='center'><p><font color=red>Contraseña equivocada</font></p></div>";
                 }
             }
-            /*header("Location: uco.es");*/
-            /*exit;*/
         }
     }
 
