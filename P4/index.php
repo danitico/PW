@@ -2,64 +2,68 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Authentication</title>
+        <title>Listado de empleados</title>
     </head>
     <body>
-    <br>
-    <?php
-    require '.env.php';
-    if(isset($_GET['conf'])){
-        echo "<div align='center'><p><font color=green>" . $_GET['conf'] . "</font></p></div>";
-    }
+        <table border="2" align="center">
+            <tr>
+                <th>Número de empleado</th>
+                <th>Nombre del empleado</th>
+                <th>Acción 1</th>
+                <th>Acción 2</th>
+            </tr>
 
-    if(isset($_POST['submit'])) {
-        $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
+            <?php
+                require '.env.php';
+                require 'comprobacion.php';
+                $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
 
-        if ($db->connect_error) {
-            die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
-        }
+                if($db->connect_error){
+                    die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
+                }
 
-        $query = "SELECT PASSWORD FROM USUARIOS WHERE USERNAME LIKE " . "'" . $_POST['username'] . "';";
-        $result = $db->query($query);
-        if (!$result) {
-            die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
-        }
-        else{
-            if ($db->affected_rows === 0){
-                echo "<div align='center'><p><font color=red>El usuario " . $_POST['username'] . " no existe</font></p></div>";
+
+                $query = "SELECT NOMBRE FROM EMPLEADOS";
+                $results = $db->query($query);
+                $results = $results->fetch_all(MYSQLI_NUM);
+                $i = 1;
+
+                foreach ($results as $name){
+                    echo "<tr>\n<td>$i</td>\n";
+                    echo '<td><a href="details.php?NOMBRE=' . urlencode($name[0]) . '">' . $name[0] . '</a></td>';
+                    if(auth()) {
+                        echo '<td><a href="delete.php?NOMBRE=' . urlencode($name[0]) . '">' . "Borrar" . '</a></td>';
+                        echo '<td><a href="modify.php?NOMBRE=' . urlencode($name[0]) . '">' . "Modificar" . '</a></td>';
+                    }
+                    else{
+                        echo '<td></td>';
+                        echo '<td></td>';
+                    }
+                    echo "</tr>";
+                    $i++;
+                }
+
                 $db->close();
-            }
-            else{
-                $result = $result->fetch_all(MYSQLI_NUM);
+            ?>
+        </table>
+        <br>
+        <div align="center">
+            <?php
+                if(auth()) {
+                    echo '<form style="display: inline"  action="insert.php" method="get">';
+                    echo '<button>Añadir empleado</button>';
+                    echo '</form>';
 
-                if(password_verify($_POST['passwd'], $result[0][0])){
-                    $secret_word = "I am a computer scientist";
-                    setcookie('login',$_POST['username'].','.md5($_POST['username'].$secret_word), 0);
-                    header("Location: prueba.php");
+                    echo '<form style="display: inline"  action="auth.php" method="get">';
+                    echo '<button>Cerrar sesión</button>';
+                    echo '</form>';
                 }
                 else{
-                    echo "<div align='center'><p><font color=red>Contraseña equivocada</font></p></div>";
+                    echo '<form style="display: inline"  action="auth.php" method="get">';
+                    echo '<button>Iniciar sesión</button>';
+                    echo '</form>';
                 }
-            }
-        }
-    }
-
-    ?>
-    <div align="center">
-        <form method="post" action="">
-            <label for="username">Username</label><br>
-            <input type="text" name="username" required><br>
-
-            <label for="passwd">Password</label><br>
-            <input type="password" name="passwd" required><br>
-
-            <br><input name="submit" type="submit" value="Entrar">
-        </form>
-    </div>
-    <div align="center">
-        <form style="display: inline"  action="register.php" method="post">
-            <button>Crear una cuenta</button>
-        </form>
-    </div>
+            ?>
+        </div>
     </body>
 </html>

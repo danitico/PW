@@ -28,13 +28,12 @@
                         $query = "INSERT INTO USUARIOS VALUES ('" . $_POST['username'] . "', '" . $encrypted_password . "');";
                         $result = $db->query($query);
                         if(!$result){
-                            echo "hola1";
                             die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                         }
                         else{
                             $confirmacion = "Usuario registrado correctamente";
                             $db->close();
-                            header("Location: index.php?conf=" . urlencode($confirmacion));
+                            header("Location: auth.php?conf=" . urlencode($confirmacion));
                         }
                     }
                     else{
