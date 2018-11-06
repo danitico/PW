@@ -30,12 +30,13 @@
 
                 foreach ($results as $name){
                     echo "<tr>\n<td>$i</td>\n";
-                    echo '<td><a href="details.php?NOMBRE=' . urlencode($name[0]) . '">' . $name[0] . '</a></td>';
                     if(auth()) {
+                        echo '<td><a href="details.php?NOMBRE=' . urlencode($name[0]) . '">' . $name[0] . '</a></td>';
                         echo '<td><a href="delete.php?NOMBRE=' . urlencode($name[0]) . '">' . "Borrar" . '</a></td>';
                         echo '<td><a href="modify.php?NOMBRE=' . urlencode($name[0]) . '">' . "Modificar" . '</a></td>';
                     }
                     else{
+                        echo '<td>' . $name[0] . '</td>';
                         echo '<td></td>';
                         echo '<td></td>';
                     }
@@ -61,6 +62,10 @@
                 else{
                     echo '<form style="display: inline"  action="auth.php" method="get">';
                     echo '<button>Iniciar sesión</button>';
+                    echo '</form>';
+
+                    echo '<form style="display: inline"  action="register.php" method="post">';
+                    echo '<button>Crear una cuenta</button>';
                     echo '</form>';
                 }
             ?>

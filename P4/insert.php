@@ -8,8 +8,9 @@
         <?php
             require 'Trabajador.php';
             require '.env.php';
-            if(! isset($_COOKIE['login'])){
-                echo "<h1>401 Unauthorized</h1>";
+            if(! auth()){
+                echo '<h1>401 Unauthorized</h1>';
+                header("HTTP/1.0 401 Unauthorized");
             }
             else {
                 echo '<div align="center">';
