@@ -16,8 +16,7 @@
                 return false;
             }
         } else {
-/*            header("HTTP/1.0 401 Unauthorized");
-            echo "<h1>401 Unauthorized</h1>";*/
             return false;
         }
     }
+

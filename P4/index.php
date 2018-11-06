@@ -54,7 +54,7 @@
                     echo '<button>Añadir empleado</button>';
                     echo '</form>';
 
-                    echo '<form style="display: inline"  action="auth.php" method="get">';
+                    echo '<form style="display: inline" action="logout.php" method="get">';
                     echo '<button>Cerrar sesión</button>';
                     echo '</form>';
                 }
