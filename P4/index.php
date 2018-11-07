@@ -5,6 +5,7 @@
         <title>Listado de empleados</title>
     </head>
     <body>
+        <h2 align="center">EMPLEADOS</h2>
         <table border="2" align="center">
             <tr>
                 <th>Número de empleado</th>
@@ -15,7 +16,7 @@
 
             <?php
                 require '.env.php';
-                require 'comprobacion.php';
+                require 'funciones.php';
                 $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
 
                 if($db->connect_error){
@@ -30,10 +31,15 @@
 
                 foreach ($results as $name){
                     echo "<tr>\n<td>$i</td>\n";
-                    if(auth()) {
+                    if(auth() and isset($_COOKIE['admin'])) {
                         echo '<td><a href="details.php?NOMBRE=' . urlencode($name[0]) . '">' . $name[0] . '</a></td>';
                         echo '<td><a href="delete.php?NOMBRE=' . urlencode($name[0]) . '">' . "Borrar" . '</a></td>';
                         echo '<td><a href="modify.php?NOMBRE=' . urlencode($name[0]) . '">' . "Modificar" . '</a></td>';
+                    }
+                    else if(auth()){
+                        echo '<td><a href="details.php?NOMBRE=' . urlencode($name[0]) . '">' . $name[0] . '</a></td>';
+                        echo '<td></td>';
+                        echo '<td></td>';
                     }
                     else{
                         echo '<td>' . $name[0] . '</td>';
@@ -50,7 +56,7 @@
         <br>
         <div align="center">
             <?php
-                if(auth()) {
+                if(auth() and isset($_COOKIE['admin'])) {
                     echo '<form style="display: inline"  action="insert.php" method="get">';
                     echo '<button>Añadir empleado</button>';
                     echo '</form>';
@@ -59,7 +65,12 @@
                     echo '<button>Cerrar sesión</button>';
                     echo '</form>';
                 }
-                else{
+                else if(auth()){
+                    echo '<form style="display: inline" action="logout.php" method="get">';
+                    echo '<button>Cerrar sesión</button>';
+                    echo '</form>';
+                }
+                else {
                     echo '<form style="display: inline"  action="auth.php" method="get">';
                     echo '<button>Iniciar sesión</button>';
                     echo '</form>';

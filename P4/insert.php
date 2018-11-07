@@ -5,11 +5,12 @@
         <meta title="Añadir empleado">
     </head>
     <body>
+        <h3 align="center">AÑADIR NUEVO EMPLEADO</h3>
         <?php
             require 'Trabajador.php';
             require '.env.php';
-            require 'comprobacion.php';
-            if(! auth()){
+            require 'funciones.php';
+            if(! isset($_COOKIE['admin'])){
                 echo '<h1>401 Unauthorized</h1>';
                 header("HTTP/1.0 401 Unauthorized");
             }

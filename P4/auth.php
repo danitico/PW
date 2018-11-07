@@ -7,43 +7,41 @@
     <body>
     <br>
     <?php
-    require '.env.php';
-    if(isset($_GET['conf'])){
-        echo "<div align='center'><p><font color=green>" . $_GET['conf'] . "</font></p></div>";
-    }
-
-    if(isset($_POST['submit'])) {
-        $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
-
-        if ($db->connect_error) {
-            die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
+        require '.env.php';
+        require 'funciones.php';
+        if(isset($_GET['conf'])){
+            echo "<div align='center'><p><font color=green>" . $_GET['conf'] . "</font></p></div>";
         }
 
-        $query = "SELECT PASSWORD FROM USUARIOS WHERE USERNAME LIKE " . "'" . $_POST['username'] . "';";
-        $result = $db->query($query);
-        if (!$result) {
-            die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
-        }
-        else{
-            if ($db->affected_rows === 0){
-                echo "<div align='center'><p><font color=red>El usuario " . $_POST['username'] . " no existe</font></p></div>";
-                $db->close();
+        if(isset($_POST['submit'])) {
+            $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
+
+            if ($db->connect_error) {
+                die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
+            }
+
+            $query = "SELECT PASSWORD FROM USUARIOS WHERE USERNAME LIKE " . "'" . $_POST['username'] . "';";
+            $result = $db->query($query);
+            if (!$result) {
+                die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
             }
             else{
-                $result = $result->fetch_all(MYSQLI_NUM);
-
-                if(password_verify($_POST['passwd'], $result[0][0])){
-                    $secret_word = "I am a computer scientist";
-                    setcookie('login',$_POST['username'].','.md5($_POST['username'].$secret_word), 0);
-                    header("Location: index.php");
+                if ($db->affected_rows === 0){
+                    echo "<div align='center'><p><font color=red>El usuario " . $_POST['username'] . " no existe</font></p></div>";
+                    $db->close();
                 }
                 else{
-                    echo "<div align='center'><p><font color=red>Contraseña equivocada</font></p></div>";
+                    $result = $result->fetch_all(MYSQLI_NUM);
+
+                    if(password_verify($_POST['passwd'], $result[0][0])){
+                        login($_POST['username'], $_POST['username']=='admin');
+                    }
+                    else{
+                        echo "<div align='center'><p><font color=red>Contraseña equivocada</font></p></div>";
+                    }
                 }
             }
         }
-    }
-
     ?>
     <div align="center">
         <form method="post" action="">

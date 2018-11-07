@@ -5,6 +5,7 @@
         <title>Registro</title>
     </head>
     <body>
+        <h3 align="center">REGISTRO</h3>
         <br>
         <?php
             require '.env.php';

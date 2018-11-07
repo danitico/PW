@@ -12,7 +12,7 @@
     <ul>
     <?php
         require '.env.php';
-        require 'comprobacion.php';
+        require 'funciones.php';
         if(! auth()){
             echo '<h1>401 Unauthorized</h1>';
             header("HTTP/1.0 401 Unauthorized");
