@@ -17,16 +17,15 @@
                     die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                 }
 
-                $query = "SELECT * FROM USUARIOS WHERE USERNAME LIKE '" . $_POST['username'] . "';";
+                $query = "SELECT * FROM USUARIOS1 WHERE USERNAME LIKE '" . $_POST['username'] . "';";
                 $result = $db->query($query);
                 if (!$result) {
-                    echo "hola";
                     die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                 }
                 else{
                     if ($db->affected_rows === 0){
                         $encrypted_password = password_hash($_POST['passwd'], PASSWORD_DEFAULT);
-                        $query = "INSERT INTO USUARIOS VALUES ('" . $_POST['username'] . "', '" . $encrypted_password . "');";
+                        $query = "INSERT INTO USUARIOS1 VALUES ('" . $_POST['username'] . "', '" . $encrypted_password . "', '" . $_POST['DNI'] . "');";
                         $result = $db->query($query);
                         if(!$result){
                             die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
@@ -51,6 +50,9 @@
 
                 <label for="passwd">Password</label><br>
                 <input type="password" name="passwd" required><br>
+
+                <label for="DNI">DNI</label><br>
+                <input type="text" name="DNI" required><br>
 
                 <br><input name="submit" type="submit" value="Registrarse">
             </form>

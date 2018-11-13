@@ -32,7 +32,7 @@
                 if (isset($_POST['submit'])) {
                     $empleado = new Trabajador($_POST['nombre'], $_POST['dni'], $_POST['edad'], $_POST['departamento']);
 
-                    $query1 = "SELECT * FROM USUARIOS WHERE DNI=" . "'" . $_POST['dni'] . "';";
+                    $query1 = "SELECT * FROM EMPLEADOS WHERE DNI=" . "'" . $_POST['dni'] . "';";
                     $db->query($query1);
 
                     if ($db->connect_error) {
