@@ -36,13 +36,21 @@
                     die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                 }
 
-                $query = "INSERT INTO EMPLEADOS VALUES (\"" . (string)$empleado->getNombre() . "\",\"" . (string)$empleado->getDNI() . "\"," . (int)$empleado->getEdad() . ",\"" . (string)$empleado->getDepartamento() . "\");";
-                if (!$db->query($query)) {
-                    die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
-                } else {
+                $query_1 = "SELECT * FROM EMPLEADOS WHERE DNI LIKE " . "'" . $empleado->getDNI() . "';";
+                $result = $db->query($query_1);
+                if($db->affected_rows!=0){
+                    echo "<div align='center'><p><font color=red>Imposible insertar empleado con ese DNI. DNI duplicado en la BD</font></p></div>";
                     $db->close();
-                    header("Location: index.php");
-                    exit;
+                }
+                else {
+                    $query = "INSERT INTO EMPLEADOS VALUES (\"" . (string)$empleado->getNombre() . "\",\"" . (string)$empleado->getDNI() . "\"," . (int)$empleado->getEdad() . ",\"" . (string)$empleado->getDepartamento() . "\");";
+                    if (!$db->query($query)) {
+                        die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
+                    } else {
+                        $db->close();
+                        header("Location: index.php");
+                        exit;
+                    }
                 }
             }
         ?>
