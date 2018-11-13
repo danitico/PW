@@ -40,15 +40,23 @@
 
             if(isset($_POST['submit'])) {
                 $empleado = new Trabajador($_POST['nombre'], $_POST['dni'], $_POST['edad'], $_POST['departamento']);
-
-                $query = "UPDATE EMPLEADOS SET NOMBRE=\"" . (string)$empleado->getNombre() . "\", DNI=\"" . (string)$empleado->getDNI() . "\", EDAD=" . $empleado->getEdad() . ", DEPARTAMENTO=\"" . utf8_decode($empleado->getDepartamento()) . "\" WHERE NOMBRE LIKE " . "'" . $_GET['NOMBRE'] . "'" . ";";
-
-                if (!$db->query($query)) {
-                    die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
-                } else {
+                $query_1 = "SELECT * FROM EMPLEADOS WHERE DNI LIKE " . "'" . $empleado->getDNI() . "';";
+                $result = $db->query($query_1);
+                if($db->affected_rows!=0){
+                    echo "<div align='center'><p><font color=red>Ese DNI ya existe en la base de datos. Imposible modificar empleado</font></p></div>";
                     $db->close();
-                    header("Location: index.php");
-                    exit;
+                }
+                else {
+
+                    $query = "UPDATE EMPLEADOS SET NOMBRE='" . (string)$empleado->getNombre() . "', DNI='" . (string)$empleado->getDNI() . "', EDAD=" . $empleado->getEdad() . ", DEPARTAMENTO='" . utf8_decode($empleado->getDepartamento()) . "' WHERE NOMBRE LIKE " . "'" . $_GET['NOMBRE'] . "'" . ";";
+
+                    if (!$db->query($query)) {
+                        die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
+                    } else {
+                        $db->close();
+                        header("Location: index.php");
+                        exit;
+                    }
                 }
             }
         ?>
