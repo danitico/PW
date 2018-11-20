@@ -8,7 +8,7 @@
     <?php
         require '.env.php';
         require 'funciones.php';
-        if(auth() and isset($_COOKIE['admin'])){
+        if(adminAuth()){
             $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
             if($db->connect_error){
                 die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
