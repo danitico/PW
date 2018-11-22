@@ -20,7 +20,6 @@
                 $query = "SELECT * FROM USUARIOS WHERE USERNAME LIKE '" . $_POST['username'] . "';";
                 $result = $db->query($query);
                 if (!$result) {
-                    echo "hola";
                     die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                 }
                 else{

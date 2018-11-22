@@ -29,6 +29,12 @@
                 echo '<label for="departamento">Departamento</label><br>';
                 echo '<input type="text" name="departamento" required><br><br>';
 
+                echo '<label for="username">Username</label><br>';
+                echo '<input type="text" name="username" required><br>';
+
+                echo '<label for="passwd">Password</label><br>';
+                echo '<input type="password" name="passwd" required><br>';
+
                 echo '<input name="submit" type="submit" value="Añadir">';
                 echo '</form>';
                 echo '</div>';
@@ -36,14 +42,28 @@
                 if (isset($_POST['submit'])) {
                     $empleado = new Trabajador($_POST['nombre'], $_POST['dni'], $_POST['edad'], $_POST['departamento']);
 
-
                     $db = new mysqli($SERVERNAME, $USERNAME, $PASSWORD, $DATABASE);
 
                     if ($db->connect_error) {
                         die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                     }
 
-                    $query = "INSERT INTO EMPLEADOS VALUES (\"" . (string)$empleado->getNombre() . "\",\"" . (string)$empleado->getDNI() . "\"," . (int)$empleado->getEdad() . ",\"" . (string)$empleado->getDepartamento() . "\");";
+                    $query = "SELECT * FROM PERSONAL WHERE USERNAME LIKE '" . $_POST['username'] . "' OR DNI LIKE '" . $empleado->getDNI() . "';";
+                    $result = $db->query($query);
+                    if (!$result) {
+                        die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
+                    }
+                    else{
+                        if ($db->affected_rows === 0){
+                            $encrypted_password = password_hash($_POST['passwd'], PASSWORD_DEFAULT);
+                        }
+                        else{
+                            echo "<div align='center'><p><font color=red>El usuario " . $_POST['username'] . " ya existe</font></p></div>";
+                            $db->close();
+                        }
+                    }
+
+                    $query = "INSERT INTO PERSONAL VALUES ('" . $empleado->getNombre() . "','" . (string)$empleado->getDNI() . "'," . (int)$empleado->getEdad() . ",'" . (string)$empleado->getDepartamento() . "','" .  . "');";
                     if (!$db->query($query)) {
                         die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                     } else {

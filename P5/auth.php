@@ -54,10 +54,5 @@
             <br><input name="submit" type="submit" value="Entrar">
         </form>
     </div>
-    <div align="center">
-        <form style="display: inline"  action="register.php" method="post">
-            <button>Crear una cuenta</button>
-        </form>
-    </div>
     </body>
 </html>

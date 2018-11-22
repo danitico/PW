@@ -74,10 +74,6 @@
                     echo '<form style="display: inline"  action="auth.php" method="get">';
                     echo '<button>Iniciar sesión</button>';
                     echo '</form>';
-
-                    echo '<form style="display: inline"  action="register.php" method="post">';
-                    echo '<button>Crear una cuenta</button>';
-                    echo '</form>';
                 }
             ?>
         </div>
