@@ -20,7 +20,7 @@
                 die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
             }
 
-            $query = "SELECT PASSWORD FROM USUARIOS1 WHERE USERNAME LIKE " . "'" . $_POST['username'] . "';";
+            $query = "SELECT PASSWORD FROM USUARIOS WHERE USERNAME LIKE " . "'" . $_POST['username'] . "';";
             $result = $db->query($query);
             if (!$result) {
                 die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);

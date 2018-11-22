@@ -5,17 +5,17 @@
         <meta title="Modificar empleado">
     </head>
     <body>
-        <h3 align="center">Modificación del empleado</h3>
         <?php
             require 'Trabajador.php';
             require '.env.php';
             require 'funciones.php';
 
-            if(! isset($_COOKIE['admin'])){
+            if(! adminAuth()){
                 echo '<h1>401 Unauthorized</h1>';
                 header("HTTP/1.0 401 Unauthorized");
             }
             else {
+                echo '<h3 align="center">Modificación del empleado</h3>';
                 if(isset($_GET['CONF'])){
                     echo "<div align='center'><p><font color=red>" . $_GET['CONF'] . "</font></p></div>";
                 }
@@ -32,13 +32,14 @@
                 if (isset($_POST['submit'])) {
                     $empleado = new Trabajador($_POST['nombre'], $_POST['dni'], $_POST['edad'], $_POST['departamento']);
 
-                    $query1 = "SELECT * FROM EMPLEADOS WHERE DNI=" . "'" . $_POST['dni'] . "';";
-                    $db->query($query1);
+                    $query1 = "SELECT * FROM EMPLEADOS WHERE DNI=" . "'" . $empleado->getDNI() . "';";
+                    $query_empleado = $db->query($query1);
+                    $query_empleado = $query_empleado->fetch_all(MYSQLI_NUM);
 
                     if ($db->connect_error) {
                         die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                     } else {
-                        if($db->affected_rows != 0){
+                        if($db->affected_rows != 0 and $query_empleado[0][0] != $_GET['NOMBRE']) {
                             $message = "Ese DNI ya existe en la BD";
                             $db->close();
                             header("Location: modify.php?NOMBRE=" . urlencode($_GET['NOMBRE']) . "&CONF=" . urlencode($message));
@@ -47,7 +48,9 @@
 
                     $query = "UPDATE EMPLEADOS SET NOMBRE=\"" . (string)$empleado->getNombre() . "\", DNI=\"" . (string)$empleado->getDNI() . "\", EDAD=" . $empleado->getEdad() . ", DEPARTAMENTO=\"" . utf8_decode($empleado->getDepartamento()) . "\" WHERE NOMBRE LIKE " . "'" . $_GET['NOMBRE'] . "'" . ";";
 
-                    if (!$db->query($query)) {
+                    $flag = $db->query($query);
+
+                    if (! $flag) {
                         die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                     } else {
                         $db->close();

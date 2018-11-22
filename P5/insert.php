@@ -5,16 +5,16 @@
         <meta title="Añadir empleado">
     </head>
     <body>
-        <h3 align="center">AÑADIR NUEVO EMPLEADO</h3>
         <?php
             require 'Trabajador.php';
             require '.env.php';
             require 'funciones.php';
-            if(! isset($_COOKIE['admin'])){
+            if(! adminAuth()){
                 echo '<h1>401 Unauthorized</h1>';
                 header("HTTP/1.0 401 Unauthorized");
             }
             else {
+                echo '<h3 align="center">AÑADIR NUEVO EMPLEADO</h3>';
                 echo '<div align="center">';
                 echo '<form method="post" action="">';
                 echo '<label for="nombre">Nombre</label><br>';
