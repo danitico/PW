@@ -47,3 +47,20 @@
 
         header("Location: index.php");
     }
+
+    function getUserFromCookie(){
+        $usuario = explode(',', $_COOKIE['login']);
+        return $usuario[0];
+    }
+
+    function isApplied($db, $dni){
+        $query = "SELECT * FROM SOLICITUD WHERE DNI LIKE '" . $dni . "';";
+        $db->query($query);
+
+        if($db->affected_rows > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }

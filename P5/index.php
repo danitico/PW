@@ -12,6 +12,7 @@
                 <th>Nombre del empleado</th>
                 <th>Acción 1</th>
                 <th>Acción 2</th>
+                <th>Acción 3</th>
             </tr>
 
             <?php
@@ -24,25 +25,37 @@
                 }
 
 
-                $query = "SELECT NOMBRE FROM PERSONAL WHERE NOMBRE NOT LIKE 'Administrador'";
+                $query = "SELECT NOMBRE, USERNAME, DNI FROM PERSONAL WHERE NOMBRE NOT LIKE 'Administrador'";
                 $results = $db->query($query);
                 $results = $results->fetch_all(MYSQLI_NUM);
                 $i = 1;
 
-                foreach ($results as $name){
+                foreach ($results as $result){
                     echo "<tr>\n<td>$i</td>\n";
-                    if(auth() and isset($_COOKIE['admin'])) {
-                        echo '<td><a href="details.php?NOMBRE=' . urlencode($name[0]) . '">' . $name[0] . '</a></td>';
-                        echo '<td><a href="delete.php?NOMBRE=' . urlencode($name[0]) . '">' . "Borrar" . '</a></td>';
-                        echo '<td><a href="modify.php?NOMBRE=' . urlencode($name[0]) . '">' . "Modificar" . '</a></td>';
+                    if(adminAuth()) {
+                        echo '<td><a href="details.php?NOMBRE=' . urlencode($result[0]) . '">' . $result[0] . '</a></td>';
+                        echo '<td><a href="delete.php?NOMBRE=' . urlencode($result[0]) . '">' . "Borrar" . '</a></td>';
+                        echo '<td><a href="modify.php?NOMBRE=' . urlencode($result[0]) . '">' . "Modificar" . '</a></td>';
+                        echo '<td></td>';
                     }
                     else if(auth()){
-                        echo '<td><a href="details.php?NOMBRE=' . urlencode($name[0]) . '">' . $name[0] . '</a></td>';
+                        echo '<td><a href="details.php?NOMBRE=' . urlencode($result[0]) . '">' . $result[0] . '</a></td>';
                         echo '<td></td>';
                         echo '<td></td>';
+                        echo '<td>';
+                            if($result[1] === getUserFromCookie()){
+                                if(! isApplied($db, $result[2])) {
+                                    echo '<a href="solicitarAumento.php?usuario=' . urlencode($result[1]) . '">Solicitar Aumento</a>';
+                                }
+                                else{
+                                    echo '<a href="estadoSolicitud.php?usuario=' . urlencode($result[1]) . '&dni=' . urlencode($result[2]) . '">Status Aumento</a>';
+                                }
+                            }
+                        echo '</td>';
                     }
                     else{
-                        echo '<td>' . $name[0] . '</td>';
+                        echo '<td>' . $result[0] . '</td>';
+                        echo '<td></td>';
                         echo '<td></td>';
                         echo '<td></td>';
                     }
