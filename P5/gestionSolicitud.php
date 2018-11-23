@@ -35,6 +35,8 @@
                 } else {
                     echo '<h2 align="center">NO HAY SOLICITUDES PENDIENTES</h2>';
                 }
+                echo '<br><br>';
+                echo '<a href="index.php">Volver al listado</a>';
                 $db->close();
             }
             else{
