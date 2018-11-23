@@ -69,9 +69,13 @@
         <br>
         <div align="center">
             <?php
-                if(auth() and isset($_COOKIE['admin'])) {
+                if(auth() and adminAuth()) {
                     echo '<form style="display: inline"  action="insert.php" method="get">';
                     echo '<button>Añadir empleado</button>';
+                    echo '</form>';
+
+                    echo '<form style="display: inline"  action="gestionSolicitud.php" method="get">';
+                    echo '<button>Gestionar Solicitudes</button>';
                     echo '</form>';
 
                     echo '<form style="display: inline" action="logout.php" method="get">';

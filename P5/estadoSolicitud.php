@@ -21,6 +21,7 @@
                 echo '<h3 align="center">SU SOLICITUD DE AUMENTO DE SUELDO ESTÁ: ' . $result[0][0] . '</h3>';
                 echo '<br><br>';
                 echo '<a href="index.php">Volver al listado</a>';
+                $db->close();
             }
             else{
                 echo '<h1>401 Unauthorized</h1>';
