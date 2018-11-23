@@ -25,21 +25,21 @@
                     die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                 }
 
-                $query = "SELECT DNI,EDAD,DEPARTAMENTO FROM EMPLEADOS WHERE NOMBRE LIKE " . "'" . $_GET['NOMBRE'] . "'" . ";";
+                $query = "SELECT DNI,EDAD,DEPARTAMENTO FROM PERSONAL WHERE NOMBRE LIKE " . "'" . $_GET['NOMBRE'] . "'" . ";";
                 $results = $db->query($query);
                 $results = $results->fetch_all(MYSQLI_NUM);
 
                 if (isset($_POST['submit'])) {
                     $empleado = new Trabajador($_POST['nombre'], $_POST['dni'], $_POST['edad'], $_POST['departamento']);
 
-                    $query1 = "SELECT * FROM EMPLEADOS WHERE DNI=" . "'" . $empleado->getDNI() . "';";
+                    $query1 = "SELECT * FROM PERSONAL WHERE DNI=" . "'" . $empleado->getDNI() . "' AND NOMBRE NOT LIKE '" . $_GET['NOMBRE'] . "';";
                     $query_empleado = $db->query($query1);
                     $query_empleado = $query_empleado->fetch_all(MYSQLI_NUM);
 
                     if ($db->connect_error) {
                         die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
                     } else {
-                        if($db->affected_rows != 0 and $query_empleado[0][0] != $_GET['NOMBRE']) {
+                        if($db->affected_rows != 0) {
                             $message = "Ese DNI ya existe en la BD";
                             $db->close();
                             header("Location: modify.php?NOMBRE=" . urlencode($_GET['NOMBRE']) . "&CONF=" . urlencode($message));

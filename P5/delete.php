@@ -14,7 +14,7 @@
                 die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
             }
 
-            $query = "DELETE FROM EMPLEADOS WHERE NOMBRE LIKE " . "'" . $_GET['NOMBRE'] . "';";
+            $query = "DELETE FROM PERSONAL WHERE NOMBRE LIKE " . "'" . $_GET['NOMBRE'] . "';";
             if(!$db->query($query)){
                 die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
             }

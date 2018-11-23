@@ -27,7 +27,7 @@
                 echo '<input type="number" name="edad" required><br>';
 
                 echo '<label for="departamento">Departamento</label><br>';
-                echo '<input type="text" name="departamento" required><br><br>';
+                echo '<input type="text" name="departamento" required><br>';
 
                 echo '<label for="username">Username</label><br>';
                 echo '<input type="text" name="username" required><br>';
@@ -56,20 +56,20 @@
                     else{
                         if ($db->affected_rows === 0){
                             $encrypted_password = password_hash($_POST['passwd'], PASSWORD_DEFAULT);
+
+                            $query = "INSERT INTO PERSONAL VALUES ('" . $empleado->getNombre() . "','" . (string)$empleado->getDNI() . "'," . (int)$empleado->getEdad() . ",'" . (string)$empleado->getDepartamento() . "','" . $_POST['username'] . "','" . $encrypted_password . "');";
+                            if (!$db->query($query)) {
+                                die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
+                            } else {
+                                $db->close();
+                                header("Location: index.php");
+                                exit;
+                            }
                         }
                         else{
-                            echo "<div align='center'><p><font color=red>El usuario " . $_POST['username'] . " ya existe</font></p></div>";
+                            echo "<div align='center'><p><font color=red>El usuario o el dni ya existe</font></p></div>";
                             $db->close();
                         }
-                    }
-
-                    $query = "INSERT INTO PERSONAL VALUES ('" . $empleado->getNombre() . "','" . (string)$empleado->getDNI() . "'," . (int)$empleado->getEdad() . ",'" . (string)$empleado->getDepartamento() . "','" .  . "');";
-                    if (!$db->query($query)) {
-                        die('Connect Error (' . $db->connect_errno . ') ' . $db->connect_error);
-                    } else {
-                        $db->close();
-                        header("Location: index.php");
-                        exit;
                     }
                 }
             }

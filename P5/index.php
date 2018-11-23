@@ -24,7 +24,7 @@
                 }
 
 
-                $query = "SELECT NOMBRE FROM EMPLEADOS";
+                $query = "SELECT NOMBRE FROM PERSONAL WHERE NOMBRE NOT LIKE 'Administrador'";
                 $results = $db->query($query);
                 $results = $results->fetch_all(MYSQLI_NUM);
                 $i = 1;
